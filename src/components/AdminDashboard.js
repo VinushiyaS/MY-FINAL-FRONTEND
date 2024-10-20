@@ -1,76 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 function AdminDashboard() {
-    const [subscriptions, setSubscriptions] = useState([]);
-    const [user, setUser] = useState(null); // State for logged-in user
+    const [userEmail, setUserEmail] = useState('');
 
     useEffect(() => {
-        // Get user info from local storage
-        const storedUser = JSON.parse(localStorage.getItem('user'));
-        setUser(storedUser);
-
-        // Fetch subscription data from the server
-        axios.get('http://localhost:5000/api/subscriptions')
-            .then(response => {
-                const { subscriptions } = response.data;
-                setSubscriptions(subscriptions || []);
-            })
-            .catch(error => console.error('Error fetching subscriptions:', error));
+        // Get the user's email from local storage
+        const email = localStorage.getItem('userEmail');
+        if (email) {
+            setUserEmail(email);
+        } else {
+            // Optionally, handle the case where email is not found
+            console.error('No user email found in local storage');
+        }
     }, []);
-
-    const handleCancelSubscription = (id) => {
-        axios.post(`http://localhost:5000/api/subscriptions/cancel/${id}`)
-            .then(() => {
-                setSubscriptions(subscriptions.filter(sub => sub._id !== id));
-            })
-            .catch(error => console.error('Error canceling subscription:', error));
-    };
 
     return (
         <div className="admin-dashboard">
-            <h2>Admin Dashboard</h2>
-
-            {/* Display logged-in user information */}
-            {user && (
-                <div className="user-info">
-                    <h3>Logged In User:</h3>
-                    <p>Name: {user.name}</p>
-                    <p>Email: {user.email}</p>
-                    <p>Subscription Type: {user.subscriptionType || 'No Subscription'}</p>
-                </div>
-            )}
-
-            {/* Subscription Details */}
-            <div className="subscription-details">
-                <h3>Subscription Details</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Subscription Type</th>
-                            <th>Start Date</th>
-                            <th>Expiry Date</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {subscriptions.map(subscription => (
-                            <tr key={subscription._id}>
-                                <td>{subscription.subscriptionType}</td>
-                                <td>{new Date(subscription.startDate).toLocaleDateString()}</td>
-                                <td>{new Date(subscription.expiryDate).toLocaleDateString()}</td>
-                                <td>{subscription.status}</td>
-                                <td>
-                                    <button onClick={() => handleCancelSubscription(subscription._id)}>
-                                        Cancel
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+            <h1>Admin Dashboard</h1>
+            <p1>Logged in as: {userEmail}</p1>
+            {/* Other admin dashboard content goes here */}
         </div>
     );
 }

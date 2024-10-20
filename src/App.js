@@ -11,6 +11,7 @@ import AdminDashboard from './components/AdminDashboard'; // Import AdminDashboa
 import Home from'./components/Home';
 import ManagePlayers from './components/ManagePlayers';
 import Payment from './components/Payment'; // Adjust the path if necessary
+import TournamentDetails from './components/TournamentDetails';
 
 import './App.css';
 
@@ -29,6 +30,7 @@ function App() {
                     <Route path="/home" element={<Home />} /> {/* Route for Products */}
                     <Route path="/manage-players" element={<ManagePlayers />} />
                     <Route path="/payment" element={<Payment />} /> {/* Add payment route */}
+                    <Route path="/tournament/:id" component={TournamentDetails} />
 
                     {/* <Route path="*" element={<NotFound />} /> Route for 404 errors */}
 

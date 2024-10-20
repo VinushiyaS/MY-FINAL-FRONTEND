@@ -5,11 +5,13 @@ function Navbar() {
     return (
         <nav className="navbar">
                 <Link to="/">
-                    {/* <img src="./images/isleway(1).png" alt="Logo" className="logo-image" /> */}
+                CrickBidders
                 </Link>
             <ul>
             <li><Link to="/">Home</Link></li>
                 <li><Link to="/signup">Signup</Link></li>
+                <li><Link to="/login">Login</Link></li>
+
             </ul>
             <form className="search-form">
                     <input
@@ -17,7 +19,7 @@ function Navbar() {
                         placeholder="Search..."
                         className="search-input"
                     />
-                    <button type="submit" className="search-button">Search</button>
+                    <button1 type="submit" className="search-button">Search</button1>
                 </form>
         </nav>
     );
